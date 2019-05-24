@@ -43,7 +43,7 @@ public class Pet {
 	public Pet() {
 	}
 
-	public Pet(long id, String name, int type_id, int owner_id) {
+	public Pet(long id, String name, int type_id, int owner_id) {//sin fecha
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,14 +51,14 @@ public class Pet {
 		this.ownerId = owner_id;
 	}
 
-	public Pet(String name, int type_id, int owner_id) {
+	public Pet(String name, int type_id, int owner_id) {//sin id ni fecha
 		super();
 		this.name = name;
 		this.typeId = type_id;
 		this.ownerId = owner_id;
 	}
 
-	public Pet(String name, int typeId, int ownerId, Date birthDate) {
+	public Pet(String name, int typeId, int ownerId, Date birthDate) {//sin id
 		super();
 		this.name = name;
 		this.typeId = typeId;
