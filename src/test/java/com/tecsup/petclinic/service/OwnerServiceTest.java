@@ -20,12 +20,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.tecsup.petclinic.domain.Owner;
 import com.tecsup.petclinic.exception.OwnerNotFoundException;
 
-
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class OwnerServiceTest {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(OwnerServiceTest.class);
 	@Autowired
 	private OwnerService OwnerService;
@@ -50,49 +49,48 @@ public class OwnerServiceTest {
 //		assertEquals(NAME, owner.getFirstName());
 //
 //	}
-	
+
 	@Test
 	public void testFindOwnerByFirstName() {
 
-		String FIND_NAME = "Jeff";
+		String FIND_NAME = "Peter";
 		int SIZE_EXPECTED = 1;
 
 		List<Owner> owners = OwnerService.findByFirstName(FIND_NAME);
 
 		assertEquals(SIZE_EXPECTED, owners.size());
 	}
-	
+
 	@Test
 	public void testFindOwnerByLastName() {
 
-		String OWNER_LAST_NAME = "Escobito";
+		String OWNER_LAST_NAME = "Davis";
 		Owner owner;
 		List<Owner> owners = OwnerService.findByLastName(OWNER_LAST_NAME);
 		owner = owners.get(0);
-		
+
 		assertEquals(OWNER_LAST_NAME, owner.getLastName());
 		logger.info("Owner with lastname '" + OWNER_LAST_NAME + "' found.");
 	}
-	
+
 	@Test
 	public void testFindOwnerByCity() {
 
 		String OWNER_CITY = "Monona";
 		int SIZE_EXPECTED = 2;
-		
+
 		List<Owner> owners = OwnerService.findByCity(OWNER_CITY);
-		
+
 		assertEquals(SIZE_EXPECTED, owners.size());
 		logger.info("Owner with city '" + OWNER_CITY + "' found.");
 	}
 
-	//Primero creo un usuario y luego elimino para no afectar los datos de la BD
 	@Test
 	public void testDeleteOwner() throws OwnerNotFoundException {
-		
-		String OWNER_FIRST_NAME = "leandro";
-		String OWNER_LAST_NAME = "morocho";
-		String OWNER_CITY = "lima";
+
+		String OWNER_FIRST_NAME = "Antony";
+		String OWNER_LAST_NAME = "Sebastian";
+		String OWNER_CITY = "LIMA";
 
 		Owner nowOwner = new Owner(OWNER_FIRST_NAME, OWNER_LAST_NAME, OWNER_CITY);
 		nowOwner = OwnerService.create(nowOwner);
@@ -103,51 +101,43 @@ public class OwnerServiceTest {
 		} catch (OwnerNotFoundException e) {
 			fail(e.getMessage());
 		}
-			
+
 		try {
 			OwnerService.findById(nowOwner.getId());
 			assertTrue(false);
 		} catch (OwnerNotFoundException e) {
 			assertTrue(true);
-		} 
-				
+		}
 
 	}
-	
+
 	@Test
 	public void testCreateAndCheckOwner() {
-		
-		String OWNER_FIRST_NAME = "leandro";
-		String OWNER_LAST_NAME = "morocho";
+
+		String OWNER_FIRST_NAME = "Antony";
+		String OWNER_LAST_NAME = "Sebastian";
 		String OWNER_CITY = "lima";
-		
+
 		Owner nowOwner = new Owner(OWNER_FIRST_NAME, OWNER_LAST_NAME, OWNER_CITY);
 		nowOwner = OwnerService.create(nowOwner);
-		
+
 		try {
 			Owner ownerFound = OwnerService.findById(nowOwner.getId());
-			logger.info("Existe Oner");
-		}catch (OwnerNotFoundException e) {
-			logger.info("Owner no ha sido creado");
+			logger.info(">>>>>Exist  Owner");
+		} catch (OwnerNotFoundException e) {
+			logger.info(">>>>>Owner isnt created");
 		}
-		
+
 		Iterable<Owner> owners = OwnerService.findAll();
-		
-		while(owners.iterator().hasNext()) {
+
+		while (owners.iterator().hasNext()) {
 			try {
 				Owner ownerFound = OwnerService.findById(nowOwner.getId());
-				logger.info("Owner con el id: "+ ownerFound.getId() + " si existe");
+				logger.info(">>>>>Owner id: " + ownerFound.getId() + " exist");
 				break;
-			}catch (OwnerNotFoundException e) {
-				logger.info("Owner no existe");
+			} catch (OwnerNotFoundException e) {
+				logger.info(">>>>>Owner dont exist");
 			}
 		}
 	}
 }
-
-
-
-
-
-
-
